@@ -1,0 +1,11 @@
+package com.chen.service;
+
+import java.util.List;
+
+import com.chen.model.Ticket;
+
+public interface OrderService {
+
+	List<Ticket> getAllTicket();
+
+}

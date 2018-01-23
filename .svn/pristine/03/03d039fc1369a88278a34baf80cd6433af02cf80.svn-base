@@ -1,0 +1,33 @@
+package com.chen.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chen.model.Ticket;
+import com.chen.service.OrderService;
+
+@Controller
+public class OrderController {
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@RequestMapping("main")
+	public String main(){
+		
+		return "order/main";
+	}
+	
+	@RequestMapping("getAllTicket")
+	public String getAllTicket(HttpServletRequest request){
+		List<Ticket> tickets = orderService.getAllTicket();
+		request.setAttribute("tickets", tickets);
+		return "order/TicketList";
+	}
+
+}

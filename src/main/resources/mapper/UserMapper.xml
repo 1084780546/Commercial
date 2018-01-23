@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.chen.dao.UserDao">
+  	
+  		<select id="getUserByUid" parameterType="com.chen.model.User" resultType="com.chen.model.User">
+  			SELECT uid,address,balance,gender,id_card AS 'idCard',NAME,PASSWORD,reg_time AS 'regTime',STATUS,te_ino AS 'teIno', username FROM t_user WHERE uid = #{uid}
+  		</select>
+  		
+  		<insert id="addUser" parameterType="com.chen.model.User">
+  			INSERT INTO t_user(uid,address,balance,gender,id_card,NAME,PASSWORD,reg_time,STATUS,te_ino,username) VALUES(#{uid},#{address},#{balance},#{gender},#{idCard},#{name},#{password},#{regTime},#{status},#{teIno},#{username})
+  		</insert>
+  		
+  		<update id="updUser" parameterType="com.chen.model.User">
+  			UPDATE t_user SET address=#{address},gender=#{gender},id_card=#{idCard},NAME=#{name},PASSWORD=#{password},te_ino=#{teIno},username=#{username} WHERE uid = #{uid}
+  		</update>
+  </mapper>

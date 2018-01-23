@@ -1,0 +1,23 @@
+package com.chen.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chen.dao.OrderDao;
+import com.chen.model.Ticket;
+import com.chen.service.OrderService;
+
+@Service
+public class OrderServiceImpl implements OrderService{
+	
+	@Autowired
+	private OrderDao orderDao;
+
+	@Override
+	public List<Ticket> getAllTicket() {
+		return orderDao.getAllTicket();
+	}
+
+}

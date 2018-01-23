@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.chen.dao.OrderDao">
+  	
+  		<select id="getAllTicket" resultType="com.chen.model.Ticket" parameterType="String">
+  			SELECT tid,tname,start_time AS 'startTime',amount,balance,price,STATUS FROM t_ticket WHERE start_time BETWEEN #{datetime} AND DATE_ADD(#{datetime}, INTERVAL 7 DAY)
+  		</select>
+  		
+  		<select id="getOrderByUid" parameterType="Integer" resultType="com.chen.model.Order">
+  			SELECT id,uid,oid,commit_time AS 'commitTime',amount FROM t_order WHERE uid = #{uid}
+  		</select>
+  		
+  		<select id="getOrderListByOid" parameterType="Integer" resultType="com.chen.model.OrderList">
+  			SELECT * FROM t_orderlist WHERE oid = #{oid}
+  		</select>
+  		
+  		<update id="userPay" parameterType="com.chen.model.User">
+  			UPDATE t_user SET balance = balance + #{money} WHERE uid = #{uid}
+  		</update>
+  		
+  		<select id="getMyCar" resultType="com.chen.model.Ticket">
+  			SELECT t.tid,t.tname,t.price,c.tnum FROM t_car c,t_ticket t WHERE t.tid=c.tid AND c.uid = #{uid}
+  		</select>
+  		
+  		<select id="getCarByTidAndUid" parameterType="com.chen.model.Car" resultType="com.chen.model.Car">
+  			SELECT * FROM t_car WHERE uid = #{uid} AND tid = #{tid}
+  		</select>
+  		
+  		<insert id="addCar" parameterType="com.chen.model.Car">
+  			INSERT INTO t_car(uid,tid,tnum) VALUES(#{uid},#{tid},#{tnum})
+  		</insert>
+  		
+  		<update id="updateCar" parameterType="com.chen.model.Car">
+  			UPDATE t_car SET tnum = #{tnum} WHERE uid = #{uid} AND tid = #{tid}
+  		</update>
+  		
+  		<delete id="deleteCar" parameterType="com.chen.model.Car">
+  			DELETE FROM t_car WHERE uid = #{uid} AND tid = #{tid}
+  		</delete>
+  		
+  		<insert id="addOrder" parameterType="com.chen.model.Order">
+  			INSERT INTO t_order(uid,oid,commit_time,amount) VALUES(#{uid},#{oid},#{commitTime},#{amount})
+  		</insert>
+  		
+  		<insert id="addOrderList" parameterType="com.chen.model.OrderList">
+  			INSERT INTO t_orderlist(oid,amount,price,quantity,tname) VALUES(#{oid},#{amount},#{price},#{quantity},#{tname})
+  		</insert>
+  		
+  		<delete id="deleteMyCar" parameterType="Integer">
+  			DELETE FROM t_car WHERE uid = #{uid}
+  		</delete>
+  		
+  		<update id="minusMyBalance">
+  			UPDATE t_user SET balance = balance - #{totalprice} WHERE uid = #{uid}
+  		</update>
+  		
+  		<select id="checkMyBalance" parameterType="Integer" resultType="double">
+  			SELECT balance FROM t_user WHERE uid = #{uid}
+  		</select>
+  </mapper>
